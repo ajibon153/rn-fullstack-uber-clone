@@ -59,7 +59,9 @@ Source : https://www.youtube.com/watch?v=kmy_YNhl0mw&list=PL6QREj8te1P7faGPL2hfi
 - node v20.19.4
 - nvm 1.1.10 - change node version
 - NativeWind - TailwindCss for react native
-- Database Postgre Neon, Project uber-clone-rn-fullstack a...g@gmail.com
+- eslint
+- Clerk for Authentification
+- Database Postgre Neon. Project uber-clone-rn-fullstack a...g@gmail.com
 
 ## Initial Project
 
@@ -81,6 +83,19 @@ dont forget to add global.css and call it on layout.tsx
 ```bash
 npm install react-native-safe-area-context
 ```
+
+- install eslint
+
+```bash
+npx expo lint
+npx expo install prettier eslint-config-prettier eslint-plugin-prettier --dev
+```
+
+adjust the eslint.config.js
+https://docs.expo.dev/guides/using-eslint/
+
+- Adjust routing folder and file
+- install npm install react-native-swiper
 
 ## How to run project
 
