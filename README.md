@@ -53,15 +53,36 @@ Join our community of developers creating universal apps.
 
 Source : https://www.youtube.com/watch?v=kmy_YNhl0mw&list=PL6QREj8te1P7faGPL2hfiM8F9zdOvZpbF
 
-## Tech
+## Tech Stack
 
 - Expo CLI
+- node v20.19.4
+- nvm 1.1.10 - change node version
+- NativeWind - TailwindCss for react native
 - Database Postgre Neon, Project uber-clone-rn-fullstack a...g@gmail.com
 
 ## Initial Project
 
 - npx create-expo-app@latest ./
+- install Tailwind Css & setup tailwind css
+
+```bash
+  npm install nativewind
+  npm install --save-dev tailwindcss
+  npx tailwindcss init
+```
+
+set all the file like in documentation
+https://www.nativewind.dev/docs/getting-started/installation
+dont forget to add global.css and call it on layout.tsx
+
+- safe area view not override the screen
+
+```bash
+npm install react-native-safe-area-context
+```
 
 ## How to run project
 
-- npm run expo
+- npm run expo / npx expo start -c
+- a / scan the barcode
