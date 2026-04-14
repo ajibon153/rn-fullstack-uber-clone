@@ -63,6 +63,9 @@ Source : https://www.youtube.com/watch?v=kmy_YNhl0mw&list=PL6QREj8te1P7faGPL2hfi
 -   Database Postgre Neon.
     Project uber-clone-rn-fullstack a...g@gm.com
 -   Clerk for Authentification
+-   Geoapify
+    Project uber-clone-rn-fullstack a...g@gm.com
+-   Google Cloud Console
 
 ## Initial Project
 
@@ -125,7 +128,7 @@ Set your Clerk API keys on .env
 
 -   next
 
-## Initial Database Neon
+### Initial Database Neon
 
 -   add api folder : app/(api)/user+api.ts
 -   set env for neon db, get key from neon dashboard
@@ -138,6 +141,21 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE NOT NULL,
     clerk_id VARCHAR(50) UNIQUE NOT NULL
 );
+```
+
+### Google Cloud Console
+
+    - API & Services
+        -   places API (not new)
+        -   Directions API
+    - Enable API & Services
+        - SideBar Credential
+        - Create credential button
+        - Api Key
+    - Install Library
+
+```bash
+npm install react-native-maps react-native-maps-directions
 ```
 
 ## How to run project
