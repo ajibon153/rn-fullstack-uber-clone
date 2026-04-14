@@ -1,6 +1,8 @@
-import { Link } from "expo-router"
+import { useAuth, useSignUp } from "@clerk/clerk-expo"
+import { type Href, Link, useRouter } from "expo-router"
 import { useState } from "react"
-import { Image, ScrollView, Text, View } from "react-native"
+import { Alert, Image, ScrollView, Text, View } from "react-native"
+import ReactNativeModal from "react-native-modal"
 
 import CustomButton from "@/components/CustomButton"
 import InputField from "@/components/InputField"
@@ -8,6 +10,10 @@ import OAuth from "@/components/OAuth"
 import { icons, images } from "@/constants"
 
 const SignUp = () => {
+    const { signUp, errors, fetchStatus } = useSignUp()
+    const { isSignedIn, isLoaded } = useAuth()
+    const router = useRouter()
+
     const [showSuccessModal, setShowSuccessModal] = useState(false)
 
     const [form, setForm] = useState({
@@ -21,8 +27,82 @@ const SignUp = () => {
         code: ""
     })
 
-    const onSignUpPress = async () => {}
-    const onPressVerify = async () => {}
+    const onSignUpPress = async () => {
+        setVerification({
+            ...verification,
+            state: "pending"
+        })
+        if (!isLoaded) return
+        try {
+            const { error } = await signUp.password({
+                emailAddress: form.email,
+                password: form.password
+            })
+            if (error) {
+                console.error(JSON.stringify(error, null, 2))
+                return
+            }
+
+            if (!error) {
+                await signUp.verifications.sendEmailCode()
+            }
+        } catch (err: any) {
+            // See https://clerk.com/docs/custom-flows/error-handling
+            // for more info on error handling
+            console.log(JSON.stringify(err, null, 2))
+            Alert.alert("Error", err.errors[0].longMessage)
+        }
+    }
+    const onPressVerify = async () => {
+        if (!isLoaded) return
+        try {
+            await signUp.verifications.verifyEmailCode({
+                code: verification.code
+            })
+            if (signUp.status === "complete") {
+                await signUp.finalize({
+                    // Redirect the user to the home page after signing up
+                    navigate: ({ session, decorateUrl }) => {
+                        // Handle session tasks
+                        // See https://clerk.com/docs/guides/development/custom-flows/authentication/session-tasks
+                        if (session?.currentTask) {
+                            console.log(session?.currentTask)
+                            return
+                        }
+                        setVerification({
+                            ...verification,
+                            state: "success"
+                        })
+
+                        // If no session tasks, navigate the signed-in user to the home page
+                        const url = decorateUrl("/")
+                        if (url.startsWith("http")) {
+                            window.location.href = url
+                        } else {
+                            router.push(url as Href)
+                        }
+                    }
+                })
+            } else {
+                // Check why the sign-up is not complete
+                setVerification({
+                    ...verification,
+                    error: "Sign-up attempt not complete.",
+                    state: "failed"
+                })
+                console.error("Sign-up attempt not complete:", signUp)
+            }
+        } catch (err: any) {
+            // See https://clerk.com/docs/custom-flows/error-handling
+            // for more info on error handling
+            setVerification({
+                ...verification,
+                error: err.errors[0].longMessage,
+                state: "failed"
+            })
+        }
+    }
+
     return (
         <ScrollView className="flex-1 bg-white">
             <View className="flex-1 bg-white">
@@ -64,7 +144,7 @@ const SignUp = () => {
                         Already have an account? <Text className="text-primary-500">Log In</Text>
                     </Link>
                 </View>
-                {/* <ReactNativeModal
+                <ReactNativeModal
                     isVisible={verification.state === "pending"}
                     onModalHide={() => {
                         if (verification.state === "success") {
@@ -100,7 +180,7 @@ const SignUp = () => {
                             className="mt-5"
                         />
                     </View>
-                </ReactNativeModal> */}
+                </ReactNativeModal>
             </View>
         </ScrollView>
     )

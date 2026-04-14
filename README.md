@@ -18,10 +18,10 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+-   [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+-   [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+-   [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+-   [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
@@ -39,15 +39,15 @@ This command will move the starter code to the **app-example** directory and cre
 
 To learn more about developing your project with Expo, look at the following resources:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+-   [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+-   [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
 ## Join the community
 
 Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+-   [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+-   [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
 ========================================================
 
@@ -55,18 +55,19 @@ Source : https://www.youtube.com/watch?v=kmy_YNhl0mw&list=PL6QREj8te1P7faGPL2hfi
 
 ## Tech Stack
 
-- Expo CLI
-- node v20.19.4
-- nvm 1.1.10 - change node version
-- NativeWind - TailwindCss for react native
-- eslint
-- Clerk for Authentification
-- Database Postgre Neon. Project uber-clone-rn-fullstack a...g@gmail.com
+-   Expo CLI
+-   node v20.19.4
+-   nvm 1.1.10 - change node version
+-   NativeWind - TailwindCss for react native
+-   eslint
+-   Database Postgre Neon.
+    Project uber-clone-rn-fullstack a...g@gm.com
+-   Clerk for Authentification
 
 ## Initial Project
 
-- npx create-expo-app@latest ./
-- install Tailwind Css & setup tailwind css
+-   npx create-expo-app@latest ./
+-   install Tailwind Css & setup tailwind css
 
 ```bash
   npm install nativewind
@@ -78,13 +79,13 @@ set all the file like in documentation
 https://www.nativewind.dev/docs/getting-started/installation
 dont forget to add global.css and call it on layout.tsx
 
-- safe area view not override the screen
+-   safe area view not override the screen
 
 ```bash
 npm install react-native-safe-area-context
 ```
 
-- install eslint
+-   install eslint
 
 ```bash
 npx expo lint
@@ -94,10 +95,41 @@ npx expo install prettier eslint-config-prettier eslint-plugin-prettier --dev
 adjust the eslint.config.js
 https://docs.expo.dev/guides/using-eslint/
 
-- Adjust routing folder and file
-- install npm install react-native-swiper
+-   Adjust routing folder and file
+-   install npm install react-native-swiper
+-   set the constants and type folder and files
+-   set clerk for authentification
+
+### Install clerk
+
+Documentation : https://clerk.com/docs/expo/getting-started/quickstart
+
+```bash
+rm -rf "app/(tabs)" app/modal.tsx app/+not-found.tsx components/
+npm uninstall react-native-reanimated react-native-worklets --legacy-peer-deps
+```
+
+Then, remove the reanimated import from app/\_layout.tsx:
+
+```bash
+import 'react-native-reanimated';
+```
+
+Install dependencies
+
+```bash
+npx expo install @clerk/expo expo-secure-store
+```
+
+Set your Clerk API keys on .env
+
+-   next
 
 ## How to run project
 
-- npm run expo / npx expo start -c
-- a / scan the barcode
+-   npm run expo / npx expo start -c
+-   a / scan the barcode
+
+## Emulator
+
+-   android studio pixel 9 SDK 35

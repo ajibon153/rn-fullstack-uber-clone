@@ -1,15 +1,16 @@
-import CustomButton from "@/components/CustomButton"
-import { onBoardingData } from "@/constants"
 import { router } from "expo-router"
 import React, { useState } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import Swiper from "react-native-swiper"
 
+import CustomButton from "@/components/CustomButton"
+import { onBoardingData } from "@/constants"
+
 const Welcome = () => {
     const swiperRef = React.useRef<Swiper>(null)
     const [activeIndex, setActiveIndex] = useState(0)
-    const isLastSlide = activeIndex === onBoardingData.length - 1
+    const isLastSlide = activeIndex === onBoardingData?.length - 1
 
     return (
         <SafeAreaView className="flex h-full items-center justify-between bg-white">

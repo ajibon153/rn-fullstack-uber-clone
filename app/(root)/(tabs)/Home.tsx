@@ -1,13 +1,28 @@
-import React from "react"
-import { Text } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { useUser } from "@clerk/clerk-expo"
+import { Text, View } from "react-native"
 
-const Home = () => {
+export default function Page() {
+    const { isSignedIn, user, isLoaded } = useUser()
+
+    // Handle loading state
+    if (!isLoaded)
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        )
+
+    // Protect the page from unauthenticated users
+    if (!isSignedIn)
+        return (
+            <View>
+                <Text>Sign in to view this page</Text>
+            </View>
+        )
+
     return (
-        <SafeAreaView>
-            <Text>Home</Text>
-        </SafeAreaView>
+        <View>
+            <Text>Hello {user.id}!</Text>
+        </View>
     )
 }
-
-export default Home
