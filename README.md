@@ -132,9 +132,12 @@ Set your Clerk API keys on .env
 -   on github, select snipet, Schema, and run Create table on neon sql editor
 
 ```bash
-  npm install nativewind
-  npm install --save-dev tailwindcss
-  npx tailwindcss init
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    clerk_id VARCHAR(50) UNIQUE NOT NULL
+);
 ```
 
 ## How to run project
