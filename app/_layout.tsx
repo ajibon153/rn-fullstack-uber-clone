@@ -6,8 +6,16 @@ import { useEffect } from "react"
 
 import "./global.css"
 import { tokenCache } from "@/lib/auth"
+import { LogBox } from "react-native"
+
+SplashScreen.preventAutoHideAsync()
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
+if (!publishableKey) {
+    throw new Error("Add your Clerk Publishable Key to the .env file")
+}
+
+LogBox.ignoreLogs(["Clerk:"])
 
 const Layout = () => {
     const [loaded] = useFonts({
@@ -24,17 +32,15 @@ const Layout = () => {
         if (loaded) {
             SplashScreen.hideAsync()
         }
-        if (!publishableKey) {
-            throw new Error("Add your Clerk Publishable Key to the .env file")
-        }
     }, [loaded])
+
+    if (!loaded) {
+        return null
+    }
 
     return (
         <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
             <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="welcome" />
-                <Stack.Screen name="sign-up" />
-                <Stack.Screen name="sign-in" />
                 <Stack.Screen name="index" />
                 <Stack.Screen name="(root)" />
                 <Stack.Screen name="(auth)" />

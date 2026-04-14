@@ -125,6 +125,18 @@ Set your Clerk API keys on .env
 
 -   next
 
+## Initial Database Neon
+
+-   add api folder : app/(api)/user+api.ts
+-   set env for neon db, get key from neon dashboard
+-   on github, select snipet, Schema, and run Create table on neon sql editor
+
+```bash
+  npm install nativewind
+  npm install --save-dev tailwindcss
+  npx tailwindcss init
+```
+
 ## How to run project
 
 -   npm run expo / npx expo start -c

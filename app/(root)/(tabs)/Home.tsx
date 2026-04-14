@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-expo"
 import { Text, View } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 export default function Page() {
     const { isSignedIn, user, isLoaded } = useUser()
@@ -21,8 +22,8 @@ export default function Page() {
         )
 
     return (
-        <View>
+        <SafeAreaView>
             <Text>Hello {user.id}!</Text>
-        </View>
+        </SafeAreaView>
     )
 }
