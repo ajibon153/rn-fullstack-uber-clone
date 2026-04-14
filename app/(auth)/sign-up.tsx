@@ -13,6 +13,8 @@ import { fetchAPI } from "@/lib/fetch"
 const SignUp = () => {
     const { isLoaded, signUp, setActive } = useSignUp()
     const [showSuccessModal, setShowSuccessModal] = useState(false)
+    const [isSigningUp, setIsSigningUp] = useState(false)
+    const [isVerifying, setIsVerifying] = useState(false)
 
     const [form, setForm] = useState({
         name: "",
@@ -26,7 +28,10 @@ const SignUp = () => {
     })
 
     const onSignUpPress = async () => {
+        console.log("isLoaded", isLoaded)
+
         if (!isLoaded) return
+        setIsSigningUp(true)
         try {
             const createdUser = await signUp.create({
                 emailAddress: form.email,
@@ -46,10 +51,13 @@ const SignUp = () => {
             // for more info on error handling
             console.log(JSON.stringify(err, null, 2))
             Alert.alert("Error", err.errors[0].longMessage)
+        } finally {
+            setIsSigningUp(false)
         }
     }
     const onPressVerify = async () => {
         if (!isLoaded) return
+        setIsVerifying(true)
         try {
             const completeSignUp = await signUp.attemptEmailAddressVerification({
                 code: verification.code
@@ -85,9 +93,10 @@ const SignUp = () => {
                 error: err.errors[0].longMessage,
                 state: "failed"
             })
+        } finally {
+            setIsVerifying(false)
         }
     }
-    console.log("verification", verification)
 
     return (
         <ScrollView className="flex-1 bg-white">
@@ -123,7 +132,12 @@ const SignUp = () => {
                         value={form.password}
                         onChangeText={(value) => setForm({ ...form, password: value })}
                     />
-                    <CustomButton title="Sign Up" onPress={onSignUpPress} className="mt-6" />
+                    <CustomButton
+                        title={isSigningUp ? "Signing Up..." : "Sign Up"}
+                        onPress={onSignUpPress}
+                        disabled={isSigningUp}
+                        className="mt-6"
+                    />
                     <OAuth />
                     <Link href="/sign-in" className="text-lg text-center text-general-200 mt-10">
                         Already have an account? <Text className="text-primary-500">Log In</Text>
@@ -152,7 +166,12 @@ const SignUp = () => {
                             onChangeText={(code) => setVerification({ ...verification, code })}
                         />
                         {verification.error && <Text className="text-red-500 text-sm mt-1">{verification.error}</Text>}
-                        <CustomButton title="Verify Email" onPress={onPressVerify} className="mt-5 bg-success-500" />
+                        <CustomButton
+                            title={isVerifying ? "Verifying..." : "Verify Email"}
+                            onPress={onPressVerify}
+                            disabled={isVerifying}
+                            className="mt-5 bg-success-500"
+                        />
                     </View>
                 </ReactNativeModal>
                 <ReactNativeModal isVisible={showSuccessModal}>
