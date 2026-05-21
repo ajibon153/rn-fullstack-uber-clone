@@ -17,6 +17,7 @@ const SignIn = () => {
     })
 
     const onSignInPress = useCallback(async () => {
+        console.log("====> presss!")
         if (!isLoaded) return
 
         try {
@@ -24,16 +25,21 @@ const SignIn = () => {
                 identifier: form.email,
                 password: form.password
             })
+            console.log("-===signInAttempt", signInAttempt)
 
             if (signInAttempt.status === "complete") {
                 await setActive({ session: signInAttempt.createdSessionId })
                 router.replace("/(root)/(tabs)/home")
             } else {
+                console.log("signInAttempt.status !== 'complete'")
+
                 // See https://clerk.com/docs/custom-flows/error-handling for more info on error handling
                 console.log(JSON.stringify(signInAttempt, null, 2))
                 Alert.alert("Error", "Log in failed. Please try again.")
             }
         } catch (err: any) {
+            console.log("CATCH")
+
             console.log(JSON.stringify(err, null, 2))
             Alert.alert("Error", err.errors[0].longMessage)
         }

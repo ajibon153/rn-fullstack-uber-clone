@@ -59,8 +59,10 @@ const SignUp = () => {
         if (!isLoaded) return
         setIsVerifying(true)
         try {
+            console.log("verification.code", verification.code)
+
             const completeSignUp = await signUp.attemptEmailAddressVerification({
-                code: verification.code
+                code: verification.code.trim().replace(/\u200B/g, "")
             })
             console.log("completeSignUp", completeSignUp)
 
@@ -88,6 +90,8 @@ const SignUp = () => {
         } catch (err: any) {
             // See https://clerk.com/docs/custom-flows/error-handling
             // for more info on error handling
+            console.log("err.errors[0]", err.errors[0])
+
             setVerification({
                 ...verification,
                 error: err.errors[0].longMessage,
@@ -162,7 +166,8 @@ const SignUp = () => {
                             icon={icons.lock}
                             placeholder={"12345"}
                             value={verification.code}
-                            keyboardType="numeric"
+                            // keyboardType="numeric"
+                            keyboardType="number-pad"
                             onChangeText={(code) => setVerification({ ...verification, code })}
                         />
                         {verification.error && <Text className="text-red-500 text-sm mt-1">{verification.error}</Text>}
