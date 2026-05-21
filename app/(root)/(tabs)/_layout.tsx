@@ -43,7 +43,7 @@ export default function Layout() {
                     tabBarIcon: ({ focused }) => <TabIcon source={icons.home} focused={focused} />
                 }}
             />
-            {/* <Tabs.Screen
+            <Tabs.Screen
                 name="Rides"
                 options={{
                     title: "Rides",
@@ -66,7 +66,7 @@ export default function Layout() {
                     headerShown: false,
                     tabBarIcon: ({ focused }) => <TabIcon source={icons.profile} focused={focused} />
                 }}
-            /> */}
+            />
         </Tabs>
     )
 }
